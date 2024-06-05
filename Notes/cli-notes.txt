@@ -1,0 +1,4 @@
+If the daemon is running when the CLI is invoked, the CLI should
+should forward all but the simplest of actions to the Daemon so that the
+daemon can properly manage build context.
+

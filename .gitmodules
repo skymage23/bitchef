@@ -1,12 +1,12 @@
-[submodule "components/sharedlib"]
-	path = components/sharedlib
+[submodule "bitchef/sharedlib"]
+	path = bitchef/sharedlib
 	url = git+ssh://git@github.com/skymage23/sharedlib
-[submodule "components/bitchef-daemon"]
-	path = components/bitchef-daemon
+[submodule "bitchef/bitchef-daemon"]
+	path = bitchef/bitchef-daemon
 	url = git+ssh://git@github.com/skymage23/bitchef-daemon
-[submodule "components/bitchef-cli"]
-	path = components/bitchef-cli
+[submodule "bitchef/bitchef-cli"]
+	path = bitchef/bitchef-cli
 	url = git+ssh://git@github.com/skymage23/bitchef-cli
-[submodule "components/bitchef-sdk"]
-	path = components/bitchef-sdk
+[submodule "bitchef/bitchef-sdk"]
+	path = bitchef/bitchef-sdk
 	url = git+ssh://git@github.com/skymage23/bitchef-sdk

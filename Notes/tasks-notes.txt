@@ -1,0 +1,18 @@
+Tasks.
+
+What handles Task management?:
+Either the daemon of the CLI, depending
+on need.
+
+Where are tasks defined?:
+In the "project.json" file.
+
+How are custom, user-made tasks defined?
+As a Python module using the Tasks public API.
+
+Where are these special Python modules expected to be stored?
+In a "bitchef/custom/tasks" directory that all BitChef projects
+are expected to have.
+
+
+bitchef-tasks

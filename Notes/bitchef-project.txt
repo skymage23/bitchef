@@ -1,0 +1,24 @@
+What is a BitChef project?
+The entire collection of code and configuration
+files needed to construct all deliverables
+for a given project, as defined by the programmer
+or by their upper management.
+
+What is included in a BitChef project?
+1. A "project.json" file.
+2. A "bitchef" directory with the following subdirectories:
+-- 1.) A "custom" directory. subdirectories:
+-- -- 1.) A "tasks" directory.
+-- -- -- The directory where all custom task Python modules are stored.
+-- 2.) ..
+
+Another OPTIONAL part is a set of reusable, user defined
+additive data (such as access credendials) that is stored
+under a ".bitchef" directory under the user's home directory.
+
+What is in the "project.json" file?
+To be glib, the definition of what constitutes
+the project, including defining build environment
+settings, dependency specifications, and task definitions.
+-- Details on all of these aspects will be discussed in their own
+   notes file.
