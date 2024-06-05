@@ -1,0 +1,21 @@
+"project.json" schema needs:
+source-based-dependencies:
+-- -- an attribute to set the "builder".
+-- -- -- Said attribute should support string and JSON object values.
+-- -- -- -- If object, must inherit from the "Builder" JSON object.
+-- -- -- -- If object, must have "type" attribute that accepts a "string" value
+-- -- -- -- -- said "string" value must be the name of a library-provided "Builder".
+
+Auto-detection of builder?: Something to add later.
+Auto-detection of "sharedlib" project?: 
+-- How?: Detection of "project.json", proper project root directories.
+-- -- That's all we need. Then, "project.json" needs a "version" attribute.
+      Let the initial value be "1.0.0".
+     
+No, and the reason is that we need to provide the option of incorporating
+the subproject fully into the overarching project, or if we need to
+keep it wholely separate and build it separately.
+
+We should still have the "version" attribute, though. [Now, we do. It's a "string" value.]
+
+

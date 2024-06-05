@@ -1,0 +1,38 @@
+The default getter is set by the selected build environment.
+By default, UNLESS a "version" map is specified for use by the
+getter for installing packages (be it on the "dependency" level
+or on the "global" level), the default behavior is to use the following
+format string "{$version.major}.{$version.minor}.{$version.revision}"
+in attempting to install the package.
+
+You can also override aspects of the "version" attribute in the 
+getter definition by using the "version_override" attribute.
+-- Attributes of "version_override" can either be numbers or
+   a format string.
+
+
+
+Use "sharedlib" to construct DarkLight OS?
+If we can get it to work, that would be helpful in generating
+ISO installer images and SD card images.
+
+Do I need to set up a method to add package management repos?,
+
+We could. What would be the best way?
+Hmm. We could define the repos under "getter_global_settings",
+
+Are we getting in over our head with this?
+
+
+We should definitely rely on "sudo" being present, by default.
+If users want to force attempting to run code requiring
+root privileges, then they should be able to pass a CLI 
+argument to do so, BUT they should be warned somewhere
+that the library can fail if it is denied access.
+
+As for the developers, they should code defensively
+and never assume they will have root. While they
+should try to run code requiring root, they should
+be able to gracefully handle being blocked by the OS
+due to not having the needed permissions.
+

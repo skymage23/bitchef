@@ -1,0 +1,8 @@
+<attribute>-<type>-<check>.<base>.json
+
+
+Finish "__parseFileName".  Make it return a tuple
+consisting of another tuple containing the filename segments
+(see above) and a boolean indicating whether or not the "filename"
+in question is a "good_sample" filename, because, if so, it
+needs to be treated differently in that case.

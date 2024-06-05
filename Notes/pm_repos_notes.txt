@@ -1,0 +1,13 @@
+Portage repos are different from APT repos, and both are different from DNF repos.
+
+In other words, there needs to be "repo" struct validation at the package management level.
+Each needs to have their own JSON Schema for validation?
+
+We need to ask ourselves "how much validation do we need to do in the JSON validator
+and how much do we need to do elsewhere?"
+We could use schema injection and have each package manager package inject its schema code in
+to the main schema. However, I don't.
+
+APT repos and DNF repos need public keys installed.
+
+Portage repos:

@@ -1,0 +1,136 @@
+Need downloader
+
+   
+Need:
+HTTPDownloader
+-- -- Also supports HTTPS
+FTPDownloader
+SFTPDownloader
+SCPDownloader
+
+
+Need TarballGetter;
+-- inherits from "source_build_base"
+-- uses "downloader".
+-- -- The downloader is chosen based on the "url" protocol.
+-- -- -- "http" or "https" for the HttpDownloader.
+-- -- -- "ftp" for the FTPDownloader
+-- -- -- "sftp" for the SFTPDownloader
+-- -- -- "scp" for the SCPDownloader
+-- Uses a "scratchpad" directory for unpacking.
+
+
+System needs a "scratchpad" directory.
+-- The amount of "scratchpad" space allowed
+   is set in "project.json".  This mainly
+   controls how aggressive the system is
+   in cleaning up after itself.
+   
+Downloader needs to support Futures.
+Downloader needs to be able to run in its own thread.
+
+
+
+Downloader will be a part of the build environment management and control infrastructure.
+
+
+
+Build Environment Management and Control Infrastructure
+will include Python APIs to precisely control the
+creation of the build environment, from dependency
+installation to running processes inside Docker
+transparently,
+
+Anything installed via this system will have all have
+dependencies tracked and indexed, with queryable
+databases containing file locations.  This will
+allow builds of the overarching product to be
+more flexible.
+
+
+For all dependencies that need to be built from source,
+a Python module must be provided by the user that describes
+how the software is to be built as well as a function
+defining the installation process.  The output from
+the latter must be an array of tuples describing the
+installer output:  (name, output_type, location),
+where "name" and "location" are strings, and "output_type"
+is an enum with three possible values: FILE, SYMLINK, and DIRECTORY.
+
+For user's convenience, some base modules will be provided:
+AutoconfBuilder, MakeBuilder, and CMakeBuilder.
+
+For any "sharedlib" project dependencies, all of their dependencies
+are imported into the current project workspace as if they were a part
+of the overarching project UNLESS you specify in the "project.json"
+that a particular "sharedlib" project needs to be built independently.
+In that case, that project will be treated as a separate "sharedlib" project
+and must expose an "project.build.py" file.
+
+
+All objects that need to be built from source must have a ".build.py" file
+that includes a class that inherits from a class named "Builder" in the
+"sharedlib" module.
+
+Builder has a could of methods
+that must be overridden in subclasses:
+1. build
+2. install
+
+Builder subclasses control how source code bases are built,
+but actual build configurations are pulled from the "project.json" file.
+
+Dependencies are described and handled in the "project.json" file.
+"sharedlib".  BUT, there will be APIs it can call to query dependency 
+install statuses, project configuration, and
+
+
+Will there be a main program that acts as the UI?
+There could be.  There WILL be APIs to control the build and the environment.
+In the end, this will make it easier to develop IDE plugins.
+
+
+".build.py" files are kept in one place:  "<project_root>/scripts/build"
+
+There will be a module accessible via API that can create all the
+files and directories associated with a new build.
+
+Source-based dependencies will automatically fail to build/install
+if there is no ".build.py" available for them or the users
+has not specified in the "project.json" file that they
+use a build system supported by the provided "Builder" base modules.
+
+File integrity checkers;
+Supported Types:
+SHA[1,256,512]: 
+-- -- "payload" must be a valid hash for said algorithm.
+
+PGP:
+-- -- "payload" must be a URL
+
+
+How can I create a JSON Schema compiler that can take
+several valid schemas and combine them into one while
+each being functional on their own?
+
+In other words, the schemas work as one and as several
+pieces.  I can start a web server to serve these files.
+How can we make this work? We can use placeholders in the
+schema files in every place where we would ordinarily
+use a valid URI.  When we are "compiling" the final
+schema, we also replace these placeholders with local
+JSON pointers. During testing, we replace these placeholders
+with valid URIs referencing sister schemas in the filesystem.
+
+First, we need to mark the project head.
+
+
+We also need to be able to have two different versions
+of the final module: DEBUG and RELEASE.
+We can do this with CMake.
+
+How and where do we compile the final module.
+
+
+We should also use a wrapper Python module that then builds, caches,
+and replaces itself with the final module.

@@ -1,0 +1,21 @@
+"sharedlib.project_management": How should I manage dependencies across projects and superprojects? Cascading delegation.
+
+While each project is independent, their build environments and dependency managers are not.
+Build environments can be shared across projects, and dependency managers need to communicate with those of
+other projects being constructed in the same build environment in order to resolve dependency conflicts.
+
+
+In that case, is is not better that the dependency managers be attached to the build environments, and
+each project registers its dependency requirements with the dependency manager, and the manager uses
+that data to resolve conflicts.  Then, it falls under the purview of the the dependency manager to actually
+pull in and install the dependencies themselves. The dependency manager should also group together installs
+that require administrative permissions to run so that it need only request privilege elevation for a
+single process. That is doable.  Anything requiring use of the package manager could be considered
+to require admin privileges, and adding an "privilege_elevation_required" boolean for any
+packages that need to be fetched using alternative getters, like GitGetter.
+
+
+Loggers are used to capture error output and CLI output.
+The loggers are properties of the project objects.
+Only 1 logger is allowed per project, and the logger used
+is defined in "project.toml".

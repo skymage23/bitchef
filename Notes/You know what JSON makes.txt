@@ -1,0 +1,40 @@
+You know what? JSON makes more sense than TOML in this case.
+-- Finalize dependency types and handling.
+-- Are you really going to use two dependency types?
+-- -- NonPackageManagement and PackageManagement. 
+-- How should you generalize having Dependencies collect
+   and handle getter-specific arguments.
+   -- We handle this by requiring entries in the "args" document
+      that pertain to each type.
+      Say we are trying to include a dependency that is a git repo.
+      Then, our args dictionary will look like this.
+      
+      type = NonPackageManagement.VCS.Git
+      args = {'NonPackageMangement': {Path:"<path>", VCS:{branch: "<branch_name>", Git:{<git_options>}}}}
+      
+      Whereas, a dependency installed via a package manager would look like this:
+      
+      type = PackageManagement
+      args = {'PackageManagement': {package_version:"<version>",package_manager_options:{}}}
+      
+      #package_manager_options: For each package manager, each represented as an object
+      #with a dictionary key named after the package manager, inside said object,
+      #add package-manager-specific parameters.
+      
+      In other words, each "args" dictionary must have at most one key/value pair whose
+      key is the type for the dependency and whose value is a sub-dictionary containing
+      parameters particular to that dependency.
+      
+      Take this type, for example:
+      
+          type = NonPackageManagement.VCS.Git
+          
+      This tells us that if we want to provide project-specific Git parameters,
+      in the "args" dictionary, we must have a "NonPackageManagement" sub-dictionary,
+      and then that sub-dictionary must have a "VCS" sub-dictionary, and, finally,
+      THAT sub-dictionary must have its own "Git" sub-dictionary, and it is there that
+      we specify the parameters to pass to Git.
+      
+-- How are you going to handle version identifier translations?
+-- -- We don't. We make users provide the correct version strings for each package manager.
+

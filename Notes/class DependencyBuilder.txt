@@ -1,0 +1,109 @@
+class DependencyBuilder():
+
+    def __init__(self, build_environment: BuildEnvironment, dependency: Dependency):
+        self.build_environment
+        self.dependency
+        raise NotImplementedError
+
+    def prebuild(self):
+        pass
+        
+    def build(self):
+        pass
+
+    def postbuild(self):
+        pass
+       
+    def install(self):
+       raise NotImplementedError
+       
+    def uninstall(self):
+       raise NotImplementedError
+       
+#The following classes are interesting in that
+#they are the only objects in this framework
+#that impose dependencies of their own
+#on any project that uses them. They have to.
+       
+ class ExistentBuildSystemBuilderSelfDefinition:
+     def __init__(self, name, binaries):
+         #Sanity check.
+         # binaries must be an array.
+         self.name
+         self.binaries
+         
+
+ class ExistentBuildSystemBuilder(DependencyBuilder):
+     def __init__(self, build_environment: BuildEnvironment, dependency: Dependency):
+         super().__init__(build_environment, dependency)
+         
+         self.self_definition = self.defineSelf()
+         self.checkIfInstalled()
+         
+     def defineSelf(self):
+         raise NotImplementedError
+       
+       
+ 
+ class CMakeBuilder(DependencyBuilder):
+     def prebuild(self):
+         pass
+        
+     def build(self):
+         pass
+         
+     def postbuild(self):
+         pass
+         
+     def install(self):
+         raise NotImplementedError
+
+     def uninstall(self):
+         raise NotImplementedError
+         
+         
+
+ class MakeBuilder(DependencyBuilder):
+     def prebuild(self):
+         pass
+        
+     def build(self):
+         pass
+         
+     def postbuild(self):
+         pass
+         
+     def install(self):
+         pass
+
+     def uninstall(self):
+         pass
+         
+ class AutoconfBuilder(MakeBuilder):
+     def prebuild(self):
+         pass
+        
+     def build(self):
+         pass
+         
+     def postbuild(self):
+         pass
+         
+     def install(self):
+         super.install()
+
+     def uninstall(self):
+         super.uninstall()
+         
+ class InstallOnlyBuilder(DependencyBuilder):
+     def install(self):
+         raise NotImplementedError
+         
+     def uninstall(self):
+         raise NotImplementedError
+         
+         
+     
+         
+         
+#Each ManualInstall dependency must specify a builder.

@@ -1,0 +1,15 @@
+project.json
+
+--General Project Settings.
+--Build Environment Settings.
+--Dependency Handling Settings.
+--Task Ordering Settings.
+-- -- Task:
+-- -- -- id:
+-- -- -- requires: [<valid_task_id>]
+-- Task folder definition.
+-- Task definitions:
+-- -- id: [<nonempty-string>]
+-- -- type: [gnu_make, cmake, custom]
+-- -- dependencies: [<array of task IDs>]  [order not important.  Execution order determined at runtime.]
+

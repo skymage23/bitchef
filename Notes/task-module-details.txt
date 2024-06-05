@@ -1,0 +1,2 @@
+Attributes:
+BackgroundMode(usage=<never|possible|always>)

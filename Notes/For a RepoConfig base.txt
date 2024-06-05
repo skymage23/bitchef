@@ -1,0 +1,19 @@
+For a RepoConfig base object, certain fields are required:
+Name
+URL
+Architecture (class CPUArchitecture(enum.Enum))
+Signing key URL (Where to get the signing key for the new Repo).
+
+
+Package Manager-specific constraints:
+APT:
+OS-Release (Like, sid, trixie, xenial, sarge, etc.)
+Repository (Like, universe, multiverse, non-free, etc.)
+
+
+A given dependency may have multiple repo configs,
+but only 1 per supported package manager is allowed.
+
+Ok. First and foremost, you need to parse the "project.toml" file and
+Have a thorough understanding of the object produced(?)
+

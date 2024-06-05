@@ -1,0 +1,14 @@
+There needs to be a dispatcher that reads the test type from the JSON filename and then calls the correct function
+to generate the test code.  How is that determined? A function callback table.
+
+
+Each schema has its own file, and each attribute to be described by the schema has its own class.
+Actually, if those attributes have sub-attributes, those are also denoted by their own class.
+
+That means, we need some way of tracing a schema back up to its parent.  This is because, should a
+test fail, we want some way to print the lineage of the attribute in question to make it easier for
+the programmer to track down and fix the issue.
+
+How can we do this?
+
+We can just make a file-global hashmap that encodes attribute inheritance properties.

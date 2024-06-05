@@ -1,0 +1,134 @@
+We are just going to go with the JSON schema compiler method, and
+how we are going to do it is the compiler will build a dependency
+graph and use that to construct the unified schema in some logical
+order.
+
+It is only during development that we will use Django to run a local HTTP
+service to serve the JSON schema files.
+
+
+SCRATCH ALL OF THAT. We can just use distributed files with relative paths
+using "python-jsonschema"'s RefResolver to set up the base directory.
+
+
+Awesome! So much work saved!
+
+Apparently, RefResolver was deprecated a while ago, and removed from
+"python-jsonschema".  I am currently researching to find another solution.
+
+https://python-jsonschema.readthedocs.io/en/latest/referencing/
+
+
+I would like some way to surpress the typical traceback exception handling behaviour in favor of
+injecting some logging. An advantage to that approach is that it makes multiprocessing easier to handle.
+
+In fact, I might consider setting up a SharedLibProcess class that sets all of this up, including communication
+with a logging process.
+
+So, I have decided to have the scriptlets that define build actions
+be required to define a child of a class called "SharedLibTask".
+This class inherits from "multiprocessing.Process" (may
+or may not be a good idea) (Actually, no that is not a good idea).
+-- In retrospect, we just want the task classes to represent actions.
+   It should be up to the library to encapsulate them in a process as
+   needed.
+
+
+The idea is that sharedlib provides the "main" function that
+sets up the project settings info
+
+(SharedLib needs the ability to operate in Daemon Mode so that long-running tasks
+can be bound to the daemon process (as their parent)).
+
+I need to put more thought into this.
+
+
+Tasks representing project management and build environment-related actions
+are expected to be provided by the "sharedlib" module and cannot be 
+overwritten using strictly the "sharedlib" API.  That is not to say you don't
+have some control.  You can set a "core count" limit to control the amount of
+CPU cores you wish to allocate for a given task (info should be collected to be
+passed to Portage (and, thereby, to GNU Make)).  These tasks should have an option
+for running them in "daemon mode".
+
+"daemon mode": "sharedlib" starts a daemon process for the explicit
+purpose of acting as parent to subprocesses that are currently running
+tasks that the user wished to have run in the background.  Can be communicated
+with using the "sharedlib" CLI utility.  User-defined tasks can also make use
+of this capability, and can even require that they be run in "daemon mode".
+
+Only 1 task of a given type and a given set of parameters may run at a time.
+Conversely, tasks should be able to establish relationships with other tasks.
+Examples: dependencies, required-to-run-before, must-always-run-after,
+cannot-be-run-alongside, and the like.  We need a launcher to pull this off.
+
+We also need a way to define tasks.  Perhaps someplace to keep these Python modules?
+
+
+Ok where?  Or, another option: tasks are defined in "project.json".
+That makes some sense, if only to have a place to define dependencies
+without importing the task modules.  Ok, but  we still have the problem
+of being able to pass CLI arguments to each task.  That can be handled
+by having the launcher pass the arguments.
+
+We can have a "tasks" folder containing the "task" Python modules.
+What do we do if multiple "tasks" are defined in the same Python module.
+
+In that case, we require a class defined as <task_name>Task(SharedLibTask)
+
+<task_name> must match the name of the "task" Python module,
+and said "task" module, to be called, must be defined in the "project.json"
+file.
+
+Task Nevers:
+Tasks should NOT be able to install dependencies.
+
+
+
+inter-object communication needs:
+Tasks do NOT need to communicate with other tasks.
+Tasks do need to be able to SEND data to the logging system.
+Tasks do NOT need to receive information from the logging system.
+Tasks do need to be able to send progress updates to either the CLI
+or the background daemon.
+--If progress-bar like facility is needed, Tasks must officially implement
+  steps-based updates, reporting the total possible number of steps and the
+  current step of the workflow at time of reporting.
+
+
+Object-Locking needs:
+
+
+We can provide default tasks for CMake and GNU Make-based builds.
+
+We need some way to allow Tasks to depend on other Tasks.
+
+Where should these dependencies be defined? Also, what makes this better than "GNU Make"?
+-- Answer to the second: the sheer power and expressiveness of Python.
+
+Ok. Where does this need to be defined?  In the "project.json" file?  Yeah. Let's keep all the
+settings in one place.  HOWEVER, let's have the caveat that tasks NEED NOT be defined in
+the "project.json" file if they have NO DEPENDENCIES.   But, Tasks are still free to depend
+on them.
+
+How can we do this? First, we set a "task_scripts" directory in "project.json". Then,
+whenever a task is requested via the CLI or if another task defined in "project.json"
+defines a dependency on such, "sharedlib" looks for a task of the appropriate name in the 
+"tasks" directory, scans it to ensure it is a valid task (that is, it defines a subclass of SharedLibTask)
+ 
+ A later feature we can add is a loadable index of all validated Task scripts, with a timestamp
+ check to ensure that the Task script has not been touched since the index was updated.
+
+Tasks need "TaskRunner"s that handle running the Tasks.
+A new question:  Do we need some sort of "context" system to provide Tasks with deep copies of
+commonly needed information?  Maybe. But, that's something to figure out as we go along.
+
+So.  What does a TaskRunner do?
+-- Handles running Tasks, be it in the same process or by forking a new process.
+-- TaskRunners should be completely invisible to the Tasks.  The TaskRunner
+   could call a method on the Task object to inject a "communications" object that handles communications.
+   
+Who holds the TaskRunners?:
+-- The daemon or the CLI, depending on our chosen method of operation.
+
+Ok.
