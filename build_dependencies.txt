@@ -1,0 +1,3 @@
+CMake
+python-devel
+protobuf

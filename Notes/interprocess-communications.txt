@@ -1,0 +1,27 @@
+bitchef.utilities.communications
+
+#include <python.h>
+
+namespace bitchef {
+    namespace utilities {
+        namespace communications {
+           class InterprocessCommsHandler {
+           
+           };
+        };
+    };
+};
+
+
+We need a transmission thread.
+We need a receiving thread.
+We need a base class for Communications.
+We need a subclass of Communications for socket communications.
+We need a subclass of Communications for Inet communications.
+-- -- Not sure if I want to use TCP or UDP, or if I want to use HTTP(S)
+      at all.
+
+We need unit and integration tests for all of this.
+We need to ensure we are equipped to marshall Protocol Buffer binary blobs.
+We need some way to provide an option to expose objects being received
+to invoking Python modules via a Python generator-type object.
