@@ -1,0 +1,9 @@
+[submodule "bitchef-sdk"]
+	path = bitchef-sdk
+	url = https://github.com/skymage23/bitchef-sdk
+[submodule "bitchef-cli"]
+	path = bitchef-cli
+	url = https://github.com/skymage23/bitchef-cli
+[submodule "bitchef-daemon"]
+	path = bitchef-daemon
+	url = https://github.com/skymage23/bitchef-daemon
