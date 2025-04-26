@@ -7,3 +7,6 @@
 [submodule "bitchef-daemon"]
 	path = bitchef-daemon
 	url = https://github.com/skymage23/bitchef-daemon
+[submodule "third_party/mongoose"]
+	path = third_party/mongoose
+	url = https://github.com/cesanta/mongoose.git
