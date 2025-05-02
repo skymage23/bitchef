@@ -1,3 +1,4 @@
 CMake
 python-devel
 protobuf
+pcre2-10.45

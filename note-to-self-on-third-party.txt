@@ -1,0 +1,2 @@
+If the dependencies don't exist on the build system or we are building for Windows or macOS,
+use the cloned submodules in the "third_party" directory.

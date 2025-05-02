@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(bitchef)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_subdirectory(bitchef-utility-libraries/bitchef-logging)
+add_subdirectory(bitchef-utility-libraries/bitchef-exceptions)
+#add_subdirectory(bitchef-utility-libraries/bitchef-communications)
+#add_subdirectory(bitchef-daemon)
+#add_subdirectory(bitchef-cli)
+#add_subdirectory(bitchef-logging)
+#add_subdirectory(bitchef-sync)
+#add_subdirectory(bitchef-system-sync)
+#add_subdirectory(bitchef-remote)
+#add_subdirectory(bitchef-platform)
+#add_subdirectory(bitchef-platform-docker)
+#add_subdirectory(bitchef-platform-vm)
+#add_subdirectory(bitchef-sdk)
