@@ -1,0 +1,8 @@
+  1  We should allow the client communications capability to be built as
+  2  as a separate static library for use by other basic Bitchef libraries,
+  3  like the Logging library.
+  4 
+  5  Make compiling with the Logging library optional for libbitchef-               communications.
+  6 
+  7 Use C++23 for all C++ code.
+~                                 
