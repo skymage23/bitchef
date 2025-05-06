@@ -7,19 +7,21 @@
 
 namespace bitchef {
     namespace exceptions {
-        class DevelopmentException : public std::runtime_error {
-            private:
-                std::stacktrace::stacktrace stacktrace;
-            public:
-                DevelopmentException(const std::string& message);
-                const std::stacktrace::stacktrace& get_stacktrace() const;
-        };
-
-        class NotImplementedException : public DevelopmentException {
-            private:
-                std::string prefix = "This function has not been implemented yet. Function name: ";
-            public:
-                NotImplementedException(const std::string& func_name);
+        namespace development {
+            class DevelopmentException : public std::runtime_error {
+                private:
+                    std::stacktrace::stacktrace stacktrace;
+                public:
+                    DevelopmentException(const std::string& message);
+                    const std::stacktrace::stacktrace& get_stacktrace() const;
+            };
+    
+            class NotImplementedException : public DevelopmentException {
+                private:
+                    std::string prefix = "This function has not been implemented yet. Function name: ";
+                public:
+                    NotImplementedException(const std::string& func_name);
+            };
         };
     }
 }
