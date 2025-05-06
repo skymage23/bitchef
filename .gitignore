@@ -1,0 +1,18 @@
+# CMake build directories
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+*.cmake
+!CMakeLists.txt
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Vim temporary files
+*.swp
+*.swo
+*~
+.*.sw[a-p]
